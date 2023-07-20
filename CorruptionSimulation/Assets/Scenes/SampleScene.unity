@@ -218,6 +218,8 @@ PlayableDirector:
     value: {fileID: 1788097960}
   - key: {fileID: 8530718767845676789, guid: 8314ded7ee4a4d14895901c80d1552b5, type: 2}
     value: {fileID: 949453961}
+  - key: {fileID: 2230236141851641760, guid: 8314ded7ee4a4d14895901c80d1552b5, type: 2}
+    value: {fileID: 1009338883}
   m_ExposedReferences:
     m_References:
     - 6aec9c17931974946a535f904068933b: {fileID: 1626724702}
@@ -4104,6 +4106,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b59a3c433dce79439ba5afcac6003c5, type: 3}
+--- !u!1 &1009338883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5372296206195963531, guid: 9aaf5f79436f1e1429dfed4f778a31d4, type: 3}
+  m_PrefabInstance: {fileID: 7075969710030176327}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1039868305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6690,6 +6697,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 43146348}
     m_Modifications:
+    - target: {fileID: 629054880, guid: 9aaf5f79436f1e1429dfed4f778a31d4, type: 3}
+      propertyPath: m_Data.m_SourceObjects.m_Item0.transform
+      value: 
+      objectReference: {fileID: 963194228}
+    - target: {fileID: 5372296206195963531, guid: 9aaf5f79436f1e1429dfed4f778a31d4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7075969711275550844, guid: 9aaf5f79436f1e1429dfed4f778a31d4, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -6737,10 +6752,6 @@ PrefabInstance:
     - target: {fileID: 7075969711275550845, guid: 9aaf5f79436f1e1429dfed4f778a31d4, type: 3}
       propertyPath: m_Name
       value: Robot
-      objectReference: {fileID: 0}
-    - target: {fileID: 7075969711275550845, guid: 9aaf5f79436f1e1429dfed4f778a31d4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9aaf5f79436f1e1429dfed4f778a31d4, type: 3}
