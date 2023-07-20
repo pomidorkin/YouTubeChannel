@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc22fb7f2e9f6a24bb40323b220ac499, type: 3}
+  m_Name: New Facial Animations Set
+  m_EditorClassIdentifier: 
+  Angry: {fileID: 2800000, guid: 696885d096f2bea43bf03e5b3f1da924, type: 3}
+  Dead: {fileID: 2800000, guid: 74f932158c46be5418313059758170ba, type: 3}
+  Disgust: {fileID: 2800000, guid: 0d23c0cf62cba6c4a93afe656bc1309b, type: 3}
+  Evil: {fileID: 2800000, guid: 9858a6d8075baf14cb625beab20f5f93, type: 3}
+  Happy: {fileID: 2800000, guid: 380b21e1632813441a274b4bb5d39ce1, type: 3}
+  Normal: {fileID: 2800000, guid: 77d7c395d290deb4996c3fb40dd9b604, type: 3}
+  Surprised: {fileID: 2800000, guid: 14560bdae7686a5468bbef11909de53b, type: 3}
+  Kawai: {fileID: 2800000, guid: bc1cd40ec1de3ce4fba48f77a0b4d080, type: 3}
+  Dollar: {fileID: 2800000, guid: e342a9633c525914d9985751c4bf468f, type: 3}
