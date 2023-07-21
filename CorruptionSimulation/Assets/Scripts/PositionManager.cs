@@ -7,11 +7,16 @@ public class PositionManager : MonoBehaviour
     [SerializeField] GameObject forestPosition;
     [SerializeField] GameObject altruistHomePosition;
     [SerializeField] GameObject individualistHomePosition;
+    [SerializeField] GameObject generalArea;
     private float walkRadius = 1f;
-    private float yPos = 3.09f;
+    [SerializeField] private float yPos = 3.09f;
+    public bool walkRadiusRequired = true;
     private void OnEnable()
     {
-        walkRadius = forestPosition.transform.localScale.x;
+        if (walkRadiusRequired)
+        {
+            walkRadius = forestPosition.transform.localScale.x;
+        }
     }
 
     public Vector3 GetRandomForestPosition()
@@ -48,6 +53,14 @@ public class PositionManager : MonoBehaviour
         {
             randomDirection += individualistHomePosition.transform.position;
         }
+        randomDirection.y = yPos;
+        return randomDirection;
+    }
+
+    public Vector3 GetRandomGeneralPositionInRange()
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * walkRadius;
+        randomDirection += generalArea.transform.position;
         randomDirection.y = yPos;
         return randomDirection;
     }

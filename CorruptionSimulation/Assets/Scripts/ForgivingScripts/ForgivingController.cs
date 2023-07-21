@@ -13,6 +13,11 @@ public class ForgivingController : MonoBehaviour
 
     public delegate void DoorOpenedEvent(object source, DoorOpenedEventArgs args);
     public event DoorOpenedEvent OnDoorOpenedEvent;*/
+    [SerializeField] GameObject kindSlimePrefab;
+    [SerializeField] GameObject evilSlimePrefab;
+    [SerializeField] GameObject egoistSlimePrefab;
+
+    [SerializeField] PositionManager positionManager;
 
     public List<ForgivingParent> allSlimes;
 
@@ -30,10 +35,17 @@ public class ForgivingController : MonoBehaviour
     public delegate void NextStep();
     public event NextStep NextStepCommand;
 
+    public delegate void ReproduceAction();
+    public event ReproduceAction ReproduceCommand;
+
     [SerializeField] private int numberOfIterations = 20;
     private int iterationIndex = 0;
+    [SerializeField] private int reproduceSequenceFrequency = 5;
+    private int reproduceCounter = 0;
+    [SerializeField] int maxPopulation = 50;
 
     private bool allProcessedStep = false;
+    private bool allSlimesReachedPosition = false;
 
     private void Start()
     {
@@ -54,13 +66,38 @@ public class ForgivingController : MonoBehaviour
             }
 
         }
-        if (allProcessedStep && (iterationIndex <= numberOfIterations) && (allSlimes.Count > 0))
+        if (allProcessedStep && (iterationIndex <= numberOfIterations) && (allSlimes.Count > 0) && allSlimesReachedPosition)
         {
             iterationIndex++;
+            reproduceCounter++;
+            if (reproduceCounter >= reproduceSequenceFrequency && (maxPopulation > allSlimes.Count))
+            {
+                reproduceCounter = 0;
+                ReproduceCommand();
+            }
             Debug.Log("Day " + iterationIndex);
             ResetCommand();
             NextStepCommand();
         }
+    }
+
+    public bool CheckIfAllReachedPosition()
+    {
+        allSlimesReachedPosition = true;
+        foreach (ForgivingParent slime in allSlimes)
+        {
+            if (!slime.positionReached)
+            {
+                allSlimesReachedPosition = false;
+                break;
+            }
+        }
+        if (allSlimesReachedPosition)
+        {
+            //AllReachedPositionCommand();
+        }
+
+        return allSlimesReachedPosition;
     }
 
     public void SlimeDiedCommand(ForgivingParent slime)
@@ -75,7 +112,37 @@ public class ForgivingController : MonoBehaviour
 
     public ForgivingParent AskRandomSlime()
     {
-        int i = UnityEngine.Random.Range(0, allSlimes.Count);
+        bool availableSlimesLeft = false;
+        foreach (ForgivingParent slime in allSlimes)
+        {
+            if (!slime.isBeingAskedForHelp && !slime.infected)
+            {
+                availableSlimesLeft = true;
+                break;
+            }
+        }
+        int i;
+        do
+        {
+            i = UnityEngine.Random.Range(0, allSlimes.Count);
+        } while (allSlimes[i].isBeingAskedForHelp && allSlimes[i].isBeingAskedForHelp);
+        
         return allSlimes[i];
+    }
+
+    public void SpawnNewSlime(int val)
+    {
+        switch (val)
+        {
+            case 1:
+                Instantiate(kindSlimePrefab, positionManager.GetRandomGeneralPositionInRange(), Quaternion.identity);
+                break;
+            case 2:
+                Instantiate(evilSlimePrefab, positionManager.GetRandomGeneralPositionInRange(), Quaternion.identity);
+                break;
+            case 3:
+                Instantiate(egoistSlimePrefab, positionManager.GetRandomGeneralPositionInRange(), Quaternion.identity);
+                break;
+        }
     }
 }
