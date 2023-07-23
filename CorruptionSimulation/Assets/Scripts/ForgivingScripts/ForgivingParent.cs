@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class ForgivingParent : MonoBehaviour
 {
     [SerializeField] ForgivingController forgivingController;
+    [SerializeField] private Animator animator;
     private Dictionary<ForgivingParent, bool> memorizedSlimes; // false == no help
     public bool infected = false;
     [SerializeField] private int enegry = 6;
@@ -23,6 +24,9 @@ public class ForgivingParent : MonoBehaviour
     NavMeshAgent agent;
     public bool positionReached = false;
 
+    private Vector3 initialPos;
+    private bool goingForHelp = false;
+
     private void OnEnable()
     {
         forgivingController = FindObjectOfType<ForgivingController>();
@@ -30,6 +34,7 @@ public class ForgivingParent : MonoBehaviour
         memorizedSlimes = new Dictionary<ForgivingParent, bool>();
         agent = GetComponent<NavMeshAgent>();
         enegry = maxEnergy;
+        initialPos = transform.position;
 
         forgivingController.ResetCommand += ResetSlime;
         forgivingController.SlimeDied += CheckIfMemorizedDied;
@@ -64,7 +69,6 @@ public class ForgivingParent : MonoBehaviour
             }
         }*/
     }
-
     private void Update()
     {
         if (!agent.pathPending)
@@ -76,9 +80,31 @@ public class ForgivingParent : MonoBehaviour
                     if (!positionReached)
                     {
                         //animator.SetTrigger("StopJumping");
-                        
-
-                        AskForHelp(slimeHelper);
+                        if (goingForHelp)
+                        {
+                            AskForHelp(slimeHelper);
+                            if (agent.isActiveAndEnabled)
+                            {
+                                goingForHelp = false;
+                                agent.SetDestination(initialPos);
+                                agent.stoppingDistance = 0;
+                                //animator.SetTrigger("Jump");
+                            }
+                            else
+                            {
+                                forgivingController.CheckIfAllReachedPosition();
+                                forgivingController.CheckIfAllProcessedStep();
+                            }
+                            
+                        }
+                        else
+                        {
+                            stepFinished = true;
+                            positionReached = true;
+                            animator.SetTrigger("StopJumping");
+                            forgivingController.CheckIfAllReachedPosition();
+                            forgivingController.CheckIfAllProcessedStep();
+                        }
                     }
                 }
             }
@@ -137,11 +163,17 @@ public class ForgivingParent : MonoBehaviour
                             memorizedSlimes.TryGetValue(slimeHelper, out isGood);
                         }
                     }
+                    goingForHelp = true;
+                    animator.SetTrigger("Jump");
+                    agent.stoppingDistance = 2;
                     agent.SetDestination(slimeHelper.transform.position);
                 }
                 else
                 {
                     slimeHelper = forgivingController.AskRandomSlime();
+                    goingForHelp = true;
+                    animator.SetTrigger("Jump");
+                    agent.stoppingDistance = 2;
                     agent.SetDestination(slimeHelper.transform.position);
                 }
                 //AskForHelp();
@@ -170,10 +202,10 @@ public class ForgivingParent : MonoBehaviour
         {
             memorizedSlimes.Add(slimeHelper, false);
         }
-        stepFinished = true;
+        /*stepFinished = true;
         positionReached = true;
         forgivingController.CheckIfAllReachedPosition();
-        forgivingController.CheckIfAllProcessedStep();
+        forgivingController.CheckIfAllProcessedStep();*/
     }
 
     public bool HelpReply(ForgivingParent helplessSlime)

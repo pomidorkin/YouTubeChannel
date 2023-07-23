@@ -318,10 +318,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forgivingController: {fileID: 0}
+  animator: {fileID: 6493335711354957225}
   infected: 0
+  enegry: 6
   maxEnergy: 50
   energyToReproduce: 3
-  infectionChance: 10
+  infectionChance: 20
   isEvil: 1
   isEgoist: 0
   stepFinished: 0
