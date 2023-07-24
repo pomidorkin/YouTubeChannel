@@ -8,6 +8,7 @@ public class ForgivingParent : MonoBehaviour
 {
     [SerializeField] ForgivingController forgivingController;
     [SerializeField] private Animator animator;
+    [SerializeField] GameObject mushroom;
     private Dictionary<ForgivingParent, bool> memorizedSlimes; // false == no help
     public bool infected = false;
     [SerializeField] private int enegry = 6;
@@ -139,7 +140,8 @@ public class ForgivingParent : MonoBehaviour
             if (rnd <= infectionChance)
             {
                 infected = true;
-                Debug.Log("I AM INFECTED!" + gameObject.name + "Infection random number = " + rnd);
+                mushroom.SetActive(true);
+                //Debug.Log("I AM INFECTED!" + gameObject.name + "Infection random number = " + rnd);
                 //AskForHelp();
             }
             stepFinished = true;
@@ -189,10 +191,11 @@ public class ForgivingParent : MonoBehaviour
         bool helpReply = slimeHelper.HelpReply(this);
         if (helpReply)
         {
+            mushroom.SetActive(false);
             infected = false;
             //enegry = maxEnergy; // Тут нужно определить и высчитать, что происходит тогда, когда мы лечим. Вся энергия возвращается, нисколько не возвращается или чуть-чуть возвращается
             enegry += 2;
-            Debug.Log("Help Received! " + gameObject.name + ", The helper is " + slimeHelper.name);
+            //Debug.Log("Help Received! " + gameObject.name + ", The helper is " + slimeHelper.name);
             if (isEvil && !memorizedSlimes.ContainsKey(slimeHelper))
             {
                 memorizedSlimes.Add(slimeHelper, true);
@@ -220,26 +223,26 @@ public class ForgivingParent : MonoBehaviour
                 memorizedSlimes.TryGetValue(helplessSlime, out val);
                 if (val)
                 {
-                    Debug.Log("I am zlopamyatniy and I am helping! " + gameObject.name);
+                    //Debug.Log("I am zlopamyatniy and I am helping! " + gameObject.name);
                     DecreaseEnergy();
                     return true;
                 }
                 else
                 {
-                    Debug.Log("I am zlopamyatniy and I am NOT helping! " + gameObject.name);
+                    //Debug.Log("I am zlopamyatniy and I am NOT helping! " + gameObject.name);
                     return false;
                 }
             }
             else
             {
-                Debug.Log("I am zlopamyatniy and I am helping! " + gameObject.name);
+                //Debug.Log("I am zlopamyatniy and I am helping! " + gameObject.name);
                 DecreaseEnergy();
                 return true;
             }
         }
         else if (isEgoist)
         {
-            Debug.Log("I am an egoist and I am NOT helping! " + gameObject.name); // Тут баг какой-то: MissingReferenceException:
+            //Debug.Log("I am an egoist and I am NOT helping! " + gameObject.name); // Тут баг какой-то: MissingReferenceException:
                                                                                   // The object of type 'ForgivingParent' has
                                                                                   // been destroyed but you are still trying to access it.
                                                                                   // Your script should either check if it is null or you
@@ -248,7 +251,7 @@ public class ForgivingParent : MonoBehaviour
         }
         else
         {
-            Debug.Log("I am a good guy and I am helping! " + gameObject.name); // And here
+            //Debug.Log("I am a good guy and I am helping! " + gameObject.name); // And here
             DecreaseEnergy();
             return true;
         }
@@ -262,8 +265,11 @@ public class ForgivingParent : MonoBehaviour
         }
         else
         {
-            forgivingController.SlimeDiedCommand(this);
-            Destroy(gameObject);
+            if (gameObject) // Null pointer Exception here sometimes
+            {
+                forgivingController.SlimeDiedCommand(this);
+                Destroy(gameObject);
+            }
         }
     }
 }

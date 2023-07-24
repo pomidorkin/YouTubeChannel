@@ -289,7 +289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &123516074
 Transform:
   m_ObjectHideFlags: 0
@@ -557,10 +557,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kind_Slime (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 2362615791658626973, guid: c666c7000bce7c142abc390c87d877fa, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3135176214008444199, guid: c666c7000bce7c142abc390c87d877fa, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -604,14 +600,6 @@ PrefabInstance:
     - target: {fileID: 3135176214008444199, guid: c666c7000bce7c142abc390c87d877fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7417930793100097560, guid: c666c7000bce7c142abc390c87d877fa, type: 3}
-      propertyPath: maxEnergy
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 7417930793100097560, guid: c666c7000bce7c142abc390c87d877fa, type: 3}
-      propertyPath: infectionChance
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7417930793100097560, guid: c666c7000bce7c142abc390c87d877fa, type: 3}
       propertyPath: forgivingController
@@ -1083,18 +1071,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Egoist_Slime (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 5964402641511170557, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6145981934921574734, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
-      propertyPath: maxEnergy
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6145981934921574734, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
-      propertyPath: infectionChance
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 6145981934921574734, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
       propertyPath: forgivingController
       value: 
@@ -1372,7 +1348,7 @@ PlayableDirector:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659056683}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: a14d721ccefd0d94ead379777455799f, type: 2}
   m_InitialState: 1
@@ -1630,24 +1606,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6379672229866286344, guid: 356affe81e0c74546b516a92186d22c2, type: 3}
-      propertyPath: maxEnergy
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6379672229866286344, guid: 356affe81e0c74546b516a92186d22c2, type: 3}
-      propertyPath: infectionChance
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6379672229866286344, guid: 356affe81e0c74546b516a92186d22c2, type: 3}
       propertyPath: forgivingController
       value: 
       objectReference: {fileID: 2123872438}
     - target: {fileID: 8531508620525310204, guid: 356affe81e0c74546b516a92186d22c2, type: 3}
       propertyPath: m_Name
       value: Evil_Slime (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531508620525310204, guid: 356affe81e0c74546b516a92186d22c2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9020095769921210950, guid: 356affe81e0c74546b516a92186d22c2, type: 3}
       propertyPath: m_RootOrder
@@ -1949,10 +1913,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6379672229866286344, guid: 356affe81e0c74546b516a92186d22c2, type: 3}
-      propertyPath: maxEnergy
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6379672229866286344, guid: 356affe81e0c74546b516a92186d22c2, type: 3}
       propertyPath: forgivingController
       value: 
       objectReference: {fileID: 2123872438}
@@ -2067,10 +2027,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7417930793100097560, guid: c666c7000bce7c142abc390c87d877fa, type: 3}
-      propertyPath: maxEnergy
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 7417930793100097560, guid: c666c7000bce7c142abc390c87d877fa, type: 3}
       propertyPath: forgivingController
       value: 
       objectReference: {fileID: 2123872438}
@@ -2083,13 +2039,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4225741595999771672, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5964402641511170557, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
       propertyPath: m_Name
       value: Egoist_Slime
-      objectReference: {fileID: 0}
-    - target: {fileID: 6145981934921574734, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
-      propertyPath: maxEnergy
-      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6145981934921574734, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
       propertyPath: forgivingController

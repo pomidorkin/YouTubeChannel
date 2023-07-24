@@ -13,6 +13,12 @@ public class TimeController : MonoBehaviour
 
     private void SetTimeSpeed(float val)
     {
-        Time.timeScale = val;
+        //Time.timeScale = val;
+        iTween.ValueTo(gameObject, iTween.Hash("from", 1, "to", val, "time", 10, "onupdatetarget", gameObject, "onupdate", "UpdateCounter"));
+    }
+
+    void UpdateCounter(float newValue)
+    {
+        Time.timeScale = newValue;
     }
 }
