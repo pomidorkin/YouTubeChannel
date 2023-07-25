@@ -1775,6 +1775,13 @@ MonoBehaviour:
   numberOfIterations: 300
   reproduceSequenceFrequency: 5
   maxPopulation: 25
+  newEvilSlimesAmount: 0
+  newEgoistSlimesAmount: 0
+  newKindlimesAmount: 0
+  maxResource: 15
+  currentResource: 0
+  reproductionAllowed: 0
+  radius: 4
 --- !u!4 &2123872439
 Transform:
   m_ObjectHideFlags: 0
@@ -1898,7 +1905,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130349509}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2795281, z: 0}
   m_LocalScale: {x: 12, y: 12, z: 12}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2039,10 +2046,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4225741595999771672, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5964402641511170557, guid: ff9997f2c6496ee4d991bbae2766f98f, type: 3}
       propertyPath: m_Name
       value: Egoist_Slime

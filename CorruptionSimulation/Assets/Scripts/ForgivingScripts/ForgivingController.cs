@@ -46,9 +46,23 @@ public class ForgivingController : MonoBehaviour
 
     private bool allProcessedStep = false;
     private bool allSlimesReachedPosition = false;
+    private bool allTriedReproduce = false;
+
+    public int newEvilSlimesAmount = 0;
+    public int newEgoistSlimesAmount = 0;
+    public int newKindlimesAmount = 0;
+
+    public int maxResource = 15;
+    public int currentResource;
+
+    private bool newSlimeHasBeenSpawned = false;
+    [SerializeField] bool reproductionAllowed = true;
+
+    [SerializeField] float radius = 4f;
 
     private void Start()
     {
+        currentResource = maxResource - allSlimes.Count;
         NextStepCommand();
     }
 
@@ -69,15 +83,123 @@ public class ForgivingController : MonoBehaviour
         if (allProcessedStep && (iterationIndex <= numberOfIterations) && (allSlimes.Count > 0) && allSlimesReachedPosition)
         {
             iterationIndex++;
-            reproduceCounter++;
-            if (reproduceCounter >= reproduceSequenceFrequency && (maxPopulation > allSlimes.Count))
-            {
-                reproduceCounter = 0;
-                ReproduceCommand();
-            }
+            ReproduceCommand();
             Debug.Log("Day " + iterationIndex);
+            //ResetCommand();
+            //NextStepCommand();
+        }
+    }
+
+    public void CheckIfAllHaveReproduced()
+    {
+        allTriedReproduce = true;
+        foreach (ForgivingParent slime in allSlimes)
+        {
+            if (!slime.triedReproduce)
+            {
+                allTriedReproduce = false;
+            }
+        }
+        Debug.Log("allTriedReproduce: " + allTriedReproduce + ", (iterationIndex < numberOfIterations): " + (iterationIndex < numberOfIterations));
+        // Interation end
+        if (allTriedReproduce && (iterationIndex < numberOfIterations))
+        {
+            allTriedReproduce = false;
+            SpawnNewSlime();
+
+            int egoistSlimeCount = 0;
+            int evilSlimeCount = 0;
+            int kindSlimesCount = 0;
+            currentResource = maxResource - allSlimes.Count;
+            foreach (ForgivingParent item in allSlimes)
+            {
+                if (item.isEgoist)
+                {
+                    egoistSlimeCount++;
+                }
+                else if (!item.isEgoist && item.isEvil)
+                {
+                    evilSlimeCount++;
+                }
+                else
+                {
+                    kindSlimesCount++;
+                }
+            }
+            //chartController.AddDataToChart(egoistSlimeCount, evilSlimeCount, kindSlimesCount);
+
             ResetCommand();
-            NextStepCommand();
+            if (!newSlimeHasBeenSpawned)
+            {
+                NextStepCommand();
+            }
+            else
+            {
+                // TODO: Код распределяющий новые позиции
+                NewPositionSetter();
+            }
+            //SendHuntCommand();
+        }
+
+    }
+
+    private void NewPositionSetter()
+    {
+        for (int i = 0; i < allSlimes.Count; i++)
+        {
+            float angle = i * Mathf.PI * 2 / allSlimes.Count;
+            float x = Mathf.Cos(angle) * radius; // 3 is a radius
+            float z = Mathf.Sin(angle) * radius; // 3 is a radius
+            Vector3 pos = transform.position + new Vector3(x, 0, z);
+            float angleDegrees = -angle * Mathf.Rad2Deg;
+            Quaternion rot = Quaternion.Euler(0, angleDegrees, 0);
+            allSlimes[i].initialPos = pos;
+            allSlimes[i].agent.SetDestination(pos);
+           /* allSlimes[i].transform.position = pos;
+            allSlimes[i].transform.rotation = rot;*/
+        }
+        newSlimeHasBeenSpawned = false;
+    }
+
+    public void IncreaseSpawningAmount(bool evil, bool kind)
+    {
+        if (evil)
+        {
+            newEvilSlimesAmount += 1;
+        }
+        else if (!evil && !kind)
+        {
+            newEgoistSlimesAmount += 1;
+        }
+        else
+        {
+            newKindlimesAmount += 1;
+        }
+    }
+
+    private void SpawnNewSlime()
+    {
+        if (reproductionAllowed)
+        {
+            if (newEvilSlimesAmount > 0 || newEgoistSlimesAmount > 0 || newKindlimesAmount > 0)
+            {
+                newSlimeHasBeenSpawned = true;
+                for (int i = 0; i < newEvilSlimesAmount; i++)
+                {
+                    Instantiate(evilSlimePrefab, positionManager.GetRandomGeneralPositionInRange(), Quaternion.identity);
+                }
+                for (int i = 0; i < newEgoistSlimesAmount; i++)
+                {
+                    Instantiate(egoistSlimePrefab, positionManager.GetRandomGeneralPositionInRange(), Quaternion.identity);
+                }
+                for (int i = 0; i < newKindlimesAmount; i++)
+                {
+                    Instantiate(kindSlimePrefab, positionManager.GetRandomGeneralPositionInRange(), Quaternion.identity);
+                }
+                newEgoistSlimesAmount = 0;
+                newEvilSlimesAmount = 0;
+                newKindlimesAmount = 0;
+            }
         }
     }
 

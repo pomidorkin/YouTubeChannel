@@ -125,7 +125,10 @@ MonoBehaviour:
   isEgoist: 0
   stepFinished: 0
   isBeingAskedForHelp: 0
+  agent: {fileID: 0}
   positionReached: 0
+  initialPos: {x: 0, y: 0, z: 0}
+  triedReproduce: 0
 --- !u!95 &915151037813871304
 Animator:
   serializedVersion: 4
@@ -160,7 +163,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 720
-  m_StoppingDistance: 2
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

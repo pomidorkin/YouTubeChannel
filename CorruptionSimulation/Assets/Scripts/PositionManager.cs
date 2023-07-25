@@ -61,7 +61,7 @@ public class PositionManager : MonoBehaviour
     {
         Vector3 randomDirection = Random.insideUnitSphere * walkRadius;
         randomDirection += generalArea.transform.position;
-        randomDirection.y = yPos;
+        //randomDirection.y = yPos;
         return randomDirection;
     }
 }

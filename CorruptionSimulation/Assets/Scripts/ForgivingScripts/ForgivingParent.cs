@@ -15,18 +15,20 @@ public class ForgivingParent : MonoBehaviour
     [SerializeField] int maxEnergy = 6;
     [SerializeField] int energyToReproduce = 3;
     public int infectionChance = 10;
-    [SerializeField] bool isEvil = false;
-    [SerializeField] bool isEgoist = false;
+    [SerializeField] public bool isEvil = false;
+    [SerializeField] public bool isEgoist = false;
     public bool stepFinished = false;
     public bool isBeingAskedForHelp = false;
 
     private ForgivingParent slimeHelper;
 
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     public bool positionReached = false;
 
-    private Vector3 initialPos;
+    public Vector3 initialPos;
     private bool goingForHelp = false;
+
+    public bool triedReproduce;
 
     private void OnEnable()
     {
@@ -54,21 +56,26 @@ public class ForgivingParent : MonoBehaviour
 
     private void Reproduce()
     {
-        /*if ((enegry - 2) > 0 && !infected)
+        // Conditions for reproducing
+        if ((enegry - energyToReproduce) > 0 && !infected && forgivingController.currentResource > 0)
         {
-            if (!isEgoist && !isEvil)
+            DecreaseEnergy(energyToReproduce);
+            forgivingController.currentResource--;
+            if (isEvil)
             {
-                forgivingController.SpawnNewSlime(1);
+                forgivingController.IncreaseSpawningAmount(true, false);
             }
-            else if (!isEgoist && isEvil)
+            else if (isEgoist)
             {
-                forgivingController.SpawnNewSlime(2);
+                forgivingController.IncreaseSpawningAmount(false, false);
             }
-            else if(isEgoist && !isEvil)
+            else
             {
-                forgivingController.SpawnNewSlime(3);
+                forgivingController.IncreaseSpawningAmount(false, true);
             }
-        }*/
+        }
+        triedReproduce = true;
+        forgivingController.CheckIfAllHaveReproduced();
     }
     private void Update()
     {
@@ -121,6 +128,7 @@ public class ForgivingParent : MonoBehaviour
         isBeingAskedForHelp = false;
         positionReached = false;
         stepFinished = false;
+        triedReproduce = false;
     }
 
     private void CheckIfMemorizedDied(object source, ForgivingController.SlimeDieEventArgs args)
@@ -186,7 +194,7 @@ public class ForgivingParent : MonoBehaviour
     private void AskForHelp(ForgivingParent slimeHelper)
     {
         Debug.Log("Asking for help!" + gameObject.name);
-        DecreaseEnergy();
+        DecreaseEnergy(energyToReproduce);
         //ForgivingParent slimeHelper = forgivingController.AskRandomSlime();
         bool helpReply = slimeHelper.HelpReply(this);
         if (helpReply)
@@ -205,63 +213,66 @@ public class ForgivingParent : MonoBehaviour
         {
             memorizedSlimes.Add(slimeHelper, false);
         }
-        /*stepFinished = true;
-        positionReached = true;
-        forgivingController.CheckIfAllReachedPosition();
-        forgivingController.CheckIfAllProcessedStep();*/
     }
 
     public bool HelpReply(ForgivingParent helplessSlime)
     {
         isBeingAskedForHelp = true;
-        if (isEvil)
+        if ((enegry - energyToReproduce) > 0)
         {
-            if (memorizedSlimes.ContainsKey(helplessSlime))
+            if (isEvil)
             {
-                // If val == true, it means that the slime has helped in the past
-                bool val;
-                memorizedSlimes.TryGetValue(helplessSlime, out val);
-                if (val)
+                if (memorizedSlimes.ContainsKey(helplessSlime))
                 {
-                    //Debug.Log("I am zlopamyatniy and I am helping! " + gameObject.name);
-                    DecreaseEnergy();
-                    return true;
+                    // If val == true, it means that the slime has helped in the past
+                    bool val;
+                    memorizedSlimes.TryGetValue(helplessSlime, out val);
+                    if (val)
+                    {
+                        //Debug.Log("I am zlopamyatniy and I am helping! " + gameObject.name);
+                        DecreaseEnergy(energyToReproduce);
+                        return true;
+                    }
+                    else
+                    {
+                        //Debug.Log("I am zlopamyatniy and I am NOT helping! " + gameObject.name);
+                        return false;
+                    }
                 }
                 else
                 {
-                    //Debug.Log("I am zlopamyatniy and I am NOT helping! " + gameObject.name);
-                    return false;
+                    //Debug.Log("I am zlopamyatniy and I am helping! " + gameObject.name);
+                    DecreaseEnergy(energyToReproduce);
+                    return true;
                 }
+            }
+            else if (isEgoist)
+            {
+                //Debug.Log("I am an egoist and I am NOT helping! " + gameObject.name); // Тут баг какой-то: MissingReferenceException:
+                // The object of type 'ForgivingParent' has
+                // been destroyed but you are still trying to access it.
+                // Your script should either check if it is null or you
+                // should not destroy the object.
+                return false;
             }
             else
             {
-                //Debug.Log("I am zlopamyatniy and I am helping! " + gameObject.name);
-                DecreaseEnergy();
+                //Debug.Log("I am a good guy and I am helping! " + gameObject.name); // And here
+                DecreaseEnergy(energyToReproduce);
                 return true;
             }
         }
-        else if (isEgoist)
-        {
-            //Debug.Log("I am an egoist and I am NOT helping! " + gameObject.name); // Тут баг какой-то: MissingReferenceException:
-                                                                                  // The object of type 'ForgivingParent' has
-                                                                                  // been destroyed but you are still trying to access it.
-                                                                                  // Your script should either check if it is null or you
-                                                                                  // should not destroy the object.
-            return false;
-        }
         else
         {
-            //Debug.Log("I am a good guy and I am helping! " + gameObject.name); // And here
-            DecreaseEnergy();
-            return true;
+            return false;
         }
     }
 
-    private void DecreaseEnergy()
+    private void DecreaseEnergy(int energyAmounr)
     {
-        if ((enegry - energyToReproduce) > 0)
+        if ((enegry - energyAmounr) > 0)
         {
-            enegry -= energyToReproduce;
+            enegry -= energyAmounr;
         }
         else
         {
