@@ -137,7 +137,7 @@ public class AltruistController : MonoBehaviour
                     corruptedSlimes++;
                 }
             }
-            chartController.AddDataToChart(altruistSlimeCount, egoistSlimes, corruptedSlimes);
+            //chartController.AddDataToChart(altruistSlimeCount, egoistSlimes, corruptedSlimes);
 
             ResetCommand();
             SendHuntCommand();

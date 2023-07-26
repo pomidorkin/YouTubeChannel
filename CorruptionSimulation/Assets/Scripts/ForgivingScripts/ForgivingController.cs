@@ -18,6 +18,8 @@ public class ForgivingController : MonoBehaviour
     [SerializeField] GameObject egoistSlimePrefab;
 
     [SerializeField] PositionManager positionManager;
+    [SerializeField] PiePopulationChart chartController;
+    [SerializeField] ChartController lineChartController;
 
     public List<ForgivingParent> allSlimes;
 
@@ -64,6 +66,7 @@ public class ForgivingController : MonoBehaviour
     {
         currentResource = maxResource - allSlimes.Count;
         NextStepCommand();
+        UpdateChart();
     }
 
     public void CheckIfAllProcessedStep()
@@ -106,27 +109,7 @@ public class ForgivingController : MonoBehaviour
         {
             allTriedReproduce = false;
             SpawnNewSlime();
-
-            int egoistSlimeCount = 0;
-            int evilSlimeCount = 0;
-            int kindSlimesCount = 0;
-            currentResource = maxResource - allSlimes.Count;
-            foreach (ForgivingParent item in allSlimes)
-            {
-                if (item.isEgoist)
-                {
-                    egoistSlimeCount++;
-                }
-                else if (!item.isEgoist && item.isEvil)
-                {
-                    evilSlimeCount++;
-                }
-                else
-                {
-                    kindSlimesCount++;
-                }
-            }
-            //chartController.AddDataToChart(egoistSlimeCount, evilSlimeCount, kindSlimesCount);
+            //UpdateChart();
 
             ResetCommand();
             if (!newSlimeHasBeenSpawned)
@@ -136,11 +119,37 @@ public class ForgivingController : MonoBehaviour
             else
             {
                 // TODO: Код распределяющий новые позиции
+                UpdateChart();
                 NewPositionSetter();
             }
             //SendHuntCommand();
         }
 
+    }
+
+    private void UpdateChart()
+    {
+        int egoistSlimeCount = 0;
+        int evilSlimeCount = 0;
+        int kindSlimesCount = 0;
+        currentResource = maxResource - allSlimes.Count;
+        foreach (ForgivingParent item in allSlimes)
+        {
+            if (item.isEgoist)
+            {
+                egoistSlimeCount++;
+            }
+            else if (!item.isEgoist && item.isEvil)
+            {
+                evilSlimeCount++;
+            }
+            else
+            {
+                kindSlimesCount++;
+            }
+        }
+        chartController.AddDataToChart(kindSlimesCount, egoistSlimeCount, evilSlimeCount);
+        lineChartController.AddDataToChart(kindSlimesCount, egoistSlimeCount, evilSlimeCount, iterationIndex);
     }
 
     private void NewPositionSetter()
@@ -155,8 +164,9 @@ public class ForgivingController : MonoBehaviour
             Quaternion rot = Quaternion.Euler(0, angleDegrees, 0);
             allSlimes[i].initialPos = pos;
             allSlimes[i].agent.SetDestination(pos);
-           /* allSlimes[i].transform.position = pos;
-            allSlimes[i].transform.rotation = rot;*/
+            allSlimes[i].animator.SetTrigger("Jump");
+            /* allSlimes[i].transform.position = pos;
+             allSlimes[i].transform.rotation = rot;*/
         }
         newSlimeHasBeenSpawned = false;
     }
@@ -230,6 +240,7 @@ public class ForgivingController : MonoBehaviour
         {
             SlimeDied(this, new SlimeDieEventArgs { Slime = slime });
         }
+        UpdateChart();
     }
 
     public ForgivingParent AskRandomSlime()

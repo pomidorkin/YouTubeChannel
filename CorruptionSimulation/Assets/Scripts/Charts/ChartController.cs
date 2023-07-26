@@ -32,7 +32,8 @@ public class ChartController : MonoBehaviour
         myChart.chartData = myChart.gameObject.AddComponent<E2ChartData>();
         myChart.chartData.title = "Комуняшки";
         myChart.chartData.yAxisTitle = "Популяция";
-        myChart.chartData.categoriesX = new List<string> { "День " + day}; //set categories
+        //myChart.chartData.categoriesX = new List<string> { "День " + day}; //set categories
+        myChart.chartData.categoriesX = new List<string> { day.ToString() }; //set categories
 
         //create new series
         series1 = new E2ChartData.Series();
@@ -61,13 +62,15 @@ public class ChartController : MonoBehaviour
         myChart.UpdateChart();
     }
 
-    public void AddDataToChart(int altruistPopulationAmount, int egoistPopulationAmount, int corruptedPopulationAmount)
+    public void AddDataToChart(int altruistPopulationAmount, int egoistPopulationAmount, int corruptedPopulationAmount, int interationIndex)
     {
-        day++;
+        day = interationIndex;
         series1.dataY.Add(altruistPopulationAmount);
         series2.dataY.Add(egoistPopulationAmount);
         series3.dataY.Add(corruptedPopulationAmount);
-        myChart.chartData.categoriesX.Add("День" + day);
+        //myChart.chartData.categoriesX.Add("День" + day);
+
+        myChart.chartData.categoriesX.Add(day.ToString());
 
         myChart.UpdateChart();
     }

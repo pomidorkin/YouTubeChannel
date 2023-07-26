@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class ForgivingParent : MonoBehaviour
 {
     [SerializeField] ForgivingController forgivingController;
-    [SerializeField] private Animator animator;
+    [SerializeField] public Animator animator;
     [SerializeField] GameObject mushroom;
     private Dictionary<ForgivingParent, bool> memorizedSlimes; // false == no help
     public bool infected = false;
