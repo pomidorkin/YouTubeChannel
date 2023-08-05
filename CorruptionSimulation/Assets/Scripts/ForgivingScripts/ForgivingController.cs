@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class ForgivingController : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class ForgivingController : MonoBehaviour
     [SerializeField] PositionManager positionManager;
     [SerializeField] PiePopulationChart chartController;
     [SerializeField] ChartController lineChartController;
+
+    [SerializeField] TMP_Text dayText;
 
     public List<ForgivingParent> allSlimes;
 
@@ -86,6 +89,7 @@ public class ForgivingController : MonoBehaviour
         if (allProcessedStep && (iterationIndex <= numberOfIterations) && (allSlimes.Count > 0) && allSlimesReachedPosition)
         {
             iterationIndex++;
+            dayText.text = "Δενό " + iterationIndex;
             ReproduceCommand();
             Debug.Log("Day " + iterationIndex);
             //ResetCommand();
