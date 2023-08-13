@@ -5,18 +5,46 @@ using UnityEngine;
 public class InfluenceController : MonoBehaviour
 {
     public List <InfluenceSlime> slimes;
+    public List<float> greenSlimesThreshold;
+    public List<float> redSlimesThreshold;
 
     public delegate void ChangeOpinionAction();
     public event ChangeOpinionAction ChangeOpinionCommand;
 
-    //public delegate void InteractAction();
-    //public event InteractAction InteractCommand;
+    public delegate void InteractAction();
+    public event InteractAction InteractCommand;
+
+    public delegate void ResetAction();
+    public event ResetAction ResetCommand;
+
+    [SerializeField] bool allowedToInteract = true;
+    private bool allSlimesReachedPosition;
+
+    [SerializeField] public bool generalThreshold = false;
+    [SerializeField] public int threshold = 15;
+    [SerializeField] public int minThreshold = 0;
+    [SerializeField] [Range(1, 100)] public float maxThreshold = 100;
+    [SerializeField] private int numberOfIterations = 20;
+    [SerializeField] public float maxDistance = 40f;
+    private int iterationIndex = 0;
 
     private bool allChangedOpinion = false;
 
+
+    float totalGreenThreshold;
+    float totalRedThreshold;
+    private float avgGreenThreshold = 0;
+    private float avgRedThreshold = 0;
+
     private void Start()
     {
-        ChangeOpinionCommand();
+        //ChangeOpinionCommand();
+        InteractCommand();
+    }
+
+    public float GetMaxWeight()
+    {
+        return slimes.Count * maxDistance;
     }
 
     public void CheckIfAllProcessedStep()
@@ -31,12 +59,78 @@ public class InfluenceController : MonoBehaviour
             }
 
         }
-        /*if (allChangedOpinion && (iterationIndex <= numberOfIterations) && (allSlimes.Count > 0) && allSlimesReachedPosition)
+        if (allowedToInteract)
         {
-            iterationIndex++;
-            dayText.text = "Δενό " + iterationIndex;
-            ReproduceCommand();
-            Debug.Log("Day " + iterationIndex);
-        }*/
+            if (allChangedOpinion && (iterationIndex <= numberOfIterations) && (slimes.Count > 0) && allSlimesReachedPosition)
+            {
+                iterationIndex++;
+                //dayText.text = "Δενό " + iterationIndex;
+                InteractCommand();
+                Debug.Log("Day " + iterationIndex);
+            }
+        }
+        else
+        {
+            if (allChangedOpinion && (iterationIndex <= numberOfIterations) && (slimes.Count > 0))
+            {
+                iterationIndex++;
+                //dayText.text = "Δενό " + iterationIndex;
+                ResetAverageThreshold();
+                ResetCommand();
+                StartCoroutine(WaitAndChangeOpinion());
+                Debug.Log("Day " + iterationIndex);
+            }
+        }
+    }
+
+    public bool CheckIfAllReachedPosition()
+    {
+        allSlimesReachedPosition = true;
+        foreach (InfluenceSlime slime in slimes)
+        {
+            if (!slime.positionReached)
+            {
+                allSlimesReachedPosition = false;
+            }
+        }
+
+        if (allSlimesReachedPosition)
+        {
+            ResetAverageThreshold();
+            ResetCommand();
+            ChangeOpinionCommand();
+        }
+
+        return allSlimesReachedPosition;
+    }
+
+    private IEnumerator WaitAndChangeOpinion()
+    {
+        yield return new WaitForSeconds(1f);
+        ChangeOpinionCommand();
+    }
+    private void ResetAverageThreshold()
+    {
+        if (greenSlimesThreshold.Count > 0 && redSlimesThreshold.Count > 0)
+        {
+            for (int i = 0; i < greenSlimesThreshold.Count; i++)
+            {
+                totalGreenThreshold += greenSlimesThreshold[i];
+            }
+            avgGreenThreshold = (float) totalGreenThreshold / greenSlimesThreshold.Count;
+
+            for (int i = 0; i < redSlimesThreshold.Count; i++)
+            {
+                totalRedThreshold += redSlimesThreshold[i];
+            }
+            avgRedThreshold = (float) totalRedThreshold / redSlimesThreshold.Count;
+
+            Debug.Log("Average Green Threshold: " + avgGreenThreshold + ", Average Red Threshold: " + avgRedThreshold);
+        }
+
+        greenSlimesThreshold.Clear();
+        redSlimesThreshold.Clear();
+        totalGreenThreshold = 0;
+        totalRedThreshold = 0;
     }
 }
