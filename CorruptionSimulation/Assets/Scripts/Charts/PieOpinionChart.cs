@@ -24,6 +24,7 @@ public class PieOpinionChart : MonoBehaviour
         series1 = new E2ChartData.Series();
         series1.name = "Красные";
         series1.dataName = new List<string>();
+        series1.dataName.Add("Красные");
         series1.dataName.Add("Зеленые");
         series1.dataY = new List<float>();
         /*series1.dataY.Add(5);

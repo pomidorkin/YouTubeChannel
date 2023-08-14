@@ -26,6 +26,8 @@ public class InfluenceSlime : MonoBehaviour
 
     float walkRadius = 3f;
 
+    [SerializeField] float MyLastSumOfWeights = 0;
+
     private void OnEnable()
     {
         influenceController.slimes.Add(this);
@@ -96,12 +98,16 @@ public class InfluenceSlime : MonoBehaviour
         for (int i = 0; i < neighbors.Count; i++)
         {
             float dist = Vector3.Distance(neighbors[i].transform.position, transform.position);
-            //Debug.Log("dist: " + dist);
-            //Debug.Log("dist: " + dist + "(maxDistance - dist): " + (maxDistance - dist));
-            sumOfWeights += (maxDistance - dist) * neighbors[i].opinion;
+            //sumOfWeights += (maxDistance - dist) * neighbors[i].opinion;
+            float opinionWeight = (maxDistance - dist);
+            sumOfWeights += (opinionWeight * (opinionWeight / influenceController.maxDistance)) * neighbors[i].opinion;// TEST
+
+            //Debug.Log("dist: " + dist + ", (sumOfWeights / influenceController.GetMaxWeight()) * 100: " + (sumOfWeights / influenceController.GetMaxWeight()) * 100);
+            //Debug.Log("Мнение/важность мнения другого слайма: " + opinionWeight * (opinionWeight / influenceController.maxDistance));
+            //Debug.Log("По старому: " + (maxDistance - dist) * neighbors[i].opinion);
         }
         sumOfWeights = (sumOfWeights / influenceController.GetMaxWeight()) * 100;
-
+        MyLastSumOfWeights = sumOfWeights;
         //Debug.Log("My threshold: " + threshold + ", sumOfWeights: " + sumOfWeights);
 
         //if ((sumOfWeights >= threshold && opinion == -1) || (sumOfWeights <= -threshold && opinion == 1))

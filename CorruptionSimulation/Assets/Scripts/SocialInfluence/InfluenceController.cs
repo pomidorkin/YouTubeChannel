@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InfluenceController : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class InfluenceController : MonoBehaviour
 
     // Charts
     [SerializeField] PieOpinionChart chartController;
+    [SerializeField] TMP_Text greenAvgText;
+    [SerializeField] TMP_Text redAvgText;
 
     private void Start()
     {
@@ -146,6 +149,8 @@ public class InfluenceController : MonoBehaviour
                 totalRedThreshold += redSlimesThreshold[i];
             }
             avgRedThreshold = (float) totalRedThreshold / redSlimesThreshold.Count;
+            greenAvgText.text = "Порог Зелёных: " + avgGreenThreshold.ToString("F1");
+            redAvgText.text = "Порог Красных: " + avgRedThreshold.ToString("F1");
 
             Debug.Log("Average Green Threshold: " + avgGreenThreshold + ", Average Red Threshold: " + avgRedThreshold);
         }

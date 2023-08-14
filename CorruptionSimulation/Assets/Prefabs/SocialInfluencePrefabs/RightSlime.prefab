@@ -145,8 +145,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influenceController: {fileID: 0}
   opinion: 1
-  threshold: 15
-  maxDistance: 10
+  threshold: 1
+  maxDistance: 40
+  controlOwnThreshold: 0
   society: []
   animator: {fileID: 3635495541487675875}
   agent: {fileID: 7318871911197238302}
@@ -154,6 +155,7 @@ MonoBehaviour:
   greenMat: {fileID: 2100000, guid: 8c3f067d97073e844a53d8283b2d3820, type: 2}
   redMat: {fileID: 2100000, guid: 795c8fb2600ecd047b7f9c84e615b2f6, type: 2}
   opinionReviewed: 0
+  positionReached: 0
 --- !u!95 &3635495541487675875
 Animator:
   serializedVersion: 4
@@ -183,7 +185,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3144696327855723949}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
