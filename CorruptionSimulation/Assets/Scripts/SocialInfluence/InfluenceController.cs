@@ -38,9 +38,12 @@ public class InfluenceController : MonoBehaviour
     private float avgRedThreshold = 0;
 
     // Charts
-    [SerializeField] PieOpinionChart chartController;
-    [SerializeField] TMP_Text greenAvgText;
-    [SerializeField] TMP_Text redAvgText;
+    //[SerializeField] PieOpinionChart chartController;
+    [SerializeField] PopulationThresholdChart populationChart;
+    [SerializeField] AvgThresholdChart avgThresholdChart;
+
+    //[SerializeField] TMP_Text greenAvgText;
+    //[SerializeField] TMP_Text redAvgText;
 
     private void Start()
     {
@@ -63,7 +66,11 @@ public class InfluenceController : MonoBehaviour
                 redSlimes++;
             }
         }
-        chartController.AddDataToChart(redSlimes, greenSlimes);
+        //chartController.AddDataToChart(redSlimes, greenSlimes);
+        if ((iterationIndex % 5) == 0)
+        {
+            populationChart.AddDataToChart(redSlimes, greenSlimes);
+        }
     }
 
     public float GetMaxWeight()
@@ -149,10 +156,15 @@ public class InfluenceController : MonoBehaviour
                 totalRedThreshold += redSlimesThreshold[i];
             }
             avgRedThreshold = (float) totalRedThreshold / redSlimesThreshold.Count;
-            greenAvgText.text = "Порог Зелёных: " + avgGreenThreshold.ToString("F1");
-            redAvgText.text = "Порог Красных: " + avgRedThreshold.ToString("F1");
+            //greenAvgText.text = "Порог Зелёных: " + avgGreenThreshold.ToString("F1");
+            //redAvgText.text = "Порог Красных: " + avgRedThreshold.ToString("F1");
 
             Debug.Log("Average Green Threshold: " + avgGreenThreshold + ", Average Red Threshold: " + avgRedThreshold);
+        }
+
+        if ((iterationIndex % 5) == 0)
+        {
+            avgThresholdChart.AddDataToChart(avgRedThreshold, avgGreenThreshold);
         }
 
         greenSlimesThreshold.Clear();

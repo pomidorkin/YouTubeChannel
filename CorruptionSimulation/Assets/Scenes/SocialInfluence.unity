@@ -1515,12 +1515,11 @@ MonoBehaviour:
   generalThreshold: 0
   threshold: 30
   minThreshold: 0
-  maxThreshold: 100
+  maxThreshold: 50
   numberOfIterations: 500
   maxDistance: 40
-  chartController: {fileID: 2072176410}
-  greenAvgText: {fileID: 830172986}
-  redAvgText: {fileID: 1120607306}
+  populationChart: {fileID: 2072176411}
+  avgThresholdChart: {fileID: 2072176412}
 --- !u!1 &155705304 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2552846048640732147, guid: 8782282e42fc20b4e9533baf44859a44, type: 3}
@@ -2151,6 +2150,298 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2893095847137759561, guid: 8782282e42fc20b4e9533baf44859a44, type: 3}
   m_PrefabInstance: {fileID: 382836933}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &318377895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 318377896}
+  - component: {fileID: 318377899}
+  - component: {fileID: 318377898}
+  m_Layer: 0
+  m_Name: ThresholdChart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &318377896
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318377895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1382152547}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 90, y: -250}
+  m_SizeDelta: {x: 600, y: 500}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &318377898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318377895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4eb5de5e3740274b89d398c23a04b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chartStyles:
+    barChart:
+      barWidth: 10
+      barSpacing: 3
+      enableBarBackground: 0
+      barBackgroundWidth: 10
+      barBackgroundColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.2}
+      barGradientStart:
+        intensity: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+      barGradientEnd:
+        intensity: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    lineChart:
+      pointSize: 10
+      enableLine: 1
+      lineWidth: 5
+      enableShade: 1
+      shadeOpacity: 0.25
+      pointOutline: 0
+      pointOutlineWidth: 2
+      pointOutlineColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+      swapPointOutlineColor: 0
+      splineCurve: 0
+    pieChart:
+      seriesSpacing: 0
+      dataSpacing: 0
+      seriesColorBlend: []
+    roseChart:
+      barWidth: 10
+      barSpacing: 3
+      enableBarBackground: 0
+      barBackgroundWidth: 10
+      barBackgroundColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.2}
+    radarChart:
+      pointSize: 10
+      enableLine: 1
+      lineWidth: 5
+      enableShade: 0
+      shadeOpacity: 0.7
+      pointOutline: 0
+      pointOutlineWidth: 2
+      pointOutlineColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+      swapPointOutlineColor: 0
+      circularGrid: 0
+    gauge:
+      pointerStart: 0
+      pointerEnd: 1
+      pointerWidth: 4
+      pointerColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+      enableSubTick: 1
+      subtickColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+      subtickSize: {x: 2, y: 3}
+      subtickDivision: 5
+      bands: []
+    solidGauge:
+      barWidth: 10
+      barSpacing: 3
+      enableBarBackground: 0
+      barBackgroundWidth: 10
+      barBackgroundColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.2}
+  plotOptions:
+    seriesColors:
+    - {r: 0.972549, g: 0.36862746, b: 0.29803923, a: 1}
+    - {r: 0.5647059, g: 0.92941177, b: 0.49019608, a: 1}
+    - {r: 0.5647059, g: 0.92941177, b: 0.49019608, a: 1}
+    - {r: 0.96862745, g: 0.6392157, b: 0.36078432, a: 1}
+    - {r: 0.5019608, g: 0.52156866, b: 0.9137255, a: 1}
+    - {r: 0.94509804, g: 0.36078432, b: 0.5019608, a: 1}
+    - {r: 0.89411765, g: 0.827451, b: 0.32941177, a: 1}
+    - {r: 0.16862746, g: 0.5647059, b: 0.56078434, a: 1}
+    - {r: 0.95686275, g: 0.35686275, b: 0.35686275, a: 1}
+    - {r: 0.74509805, g: 0.43137255, b: 0.9411765, a: 1}
+    - {r: 0.6666667, g: 0.9411765, b: 0.9411765, a: 1}
+    seriesIcons:
+    - {fileID: 21300000, guid: afa26bf056eac2d4a998668edd26ba17, type: 3}
+    cultureInfoName: 
+    generalFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    colorMode: 0
+    mouseTracking: 2
+    columnStacking: 0
+    itemHighlightColor: {r: 0.6784314, g: 0.85882354, b: 0.93333334, a: 0.39215687}
+    backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    frontGrid: 0
+  rectOptions:
+    inverted: 0
+    enableZoom: 0
+    zoomMin: 0
+    zoomMax: 1
+    minZoomInterval: 0.1
+  circleOptions:
+    innerSize: 0
+    outerSize: 1
+    startAngle: 0
+    endAngle: 360
+    autoResize: 1
+  title:
+    enableTitle: 1
+    titleAlignment: 4
+    titleOffset: {x: 0, y: 0}
+    titleTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    enableSubTitle: 0
+    subtitleAlignment: 4
+    subtitleOffset: {x: 0, y: 0}
+    subtitleTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+  xAxis:
+    type: 0
+    enableAxisLine: 1
+    axisLineColor: {r: 1, g: 1, b: 1, a: 1}
+    axisLineWidth: 2
+    enableGridLine: 0
+    gridLineColor: {r: 1, g: 1, b: 1, a: 1}
+    gridLineWidth: 1
+    enableTick: 1
+    tickColor: {r: 1, g: 1, b: 1, a: 1}
+    tickSize: {x: 2, y: 4}
+    mirrored: 0
+    minPadding: 0
+    maxPadding: 10
+    enableTitle: 0
+    titleTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 20
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    enableLabel: 1
+    labelContent: 
+    labelNumericFormat: 
+    labelTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    labelRotationMode: 0
+    autoAxisRange: 1
+    restrictAutoRange: 1
+    startFromZero: 0
+    min: 0
+    max: 100
+    axisDivision: 5
+    interval: -1
+  yAxis:
+    type: 1
+    enableAxisLine: 1
+    axisLineColor: {r: 1, g: 1, b: 1, a: 1}
+    axisLineWidth: 2
+    enableGridLine: 1
+    gridLineColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
+    gridLineWidth: 1
+    enableTick: 1
+    tickColor: {r: 1, g: 1, b: 1, a: 1}
+    tickSize: {x: 2, y: 4}
+    mirrored: 0
+    minPadding: 0
+    maxPadding: 10
+    enableTitle: 0
+    titleTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    enableLabel: 1
+    labelContent: 
+    labelNumericFormat: 
+    labelTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    labelRotationMode: 0
+    autoAxisRange: 1
+    restrictAutoRange: 0
+    startFromZero: 1
+    min: 0
+    max: 100
+    axisDivision: 5
+    interval: -1
+  tooltip:
+    enable: 1
+    headerContent: 
+    pointContent: 
+    numericFormat: 
+    textOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    backgroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.7}
+  legend:
+    enable: 1
+    position: 7
+    layout: 0
+    alignment: 0
+    spacing: {x: 0, y: 0}
+    offset: {x: 0, y: 0}
+    sizeLimit: {x: -1, y: -1}
+    content: 
+    numericFormat: 
+    textOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    enableIcon: 1
+    normalColor: {r: 0, g: 0, b: 0, a: 0}
+    highlightedColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.7}
+    dimmedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  label:
+    enable: 0
+    content: 
+    numericFormat: 
+    textOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    anchoredPosition: 1
+    offset: 12
+    rotationMode: 0
+--- !u!114 &318377899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318377895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146ed4b985137f0439f40a4c6d7f22e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chartType: 1
+  chartOptions: {fileID: 318377898}
+  chartData: {fileID: 0}
 --- !u!1001 &319448097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2386,14 +2677,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356672161}
-  m_LocalRotation: {x: -0.13107665, y: -0.8682076, z: 0.3212198, w: -0.35475683}
-  m_LocalPosition: {x: -15.728783, y: 15.550997, z: 13.810036}
+  m_LocalRotation: {x: -0.10144025, y: -0.8410101, z: 0.31910706, w: -0.4249502}
+  m_LocalPosition: {x: -15.58, y: 22.23, z: 25.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 38.533, y: 123.801, z: -7.388}
 --- !u!1001 &373098738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3995,7 +4286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &605249839
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5527,7 +5818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &830172985
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6998,7 +7289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1120607305
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9019,6 +9310,8 @@ RectTransform:
   - {fileID: 605249839}
   - {fileID: 830172985}
   - {fileID: 1120607305}
+  - {fileID: 1563928055}
+  - {fileID: 318377896}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9884,6 +10177,298 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2893095847137759561, guid: 8782282e42fc20b4e9533baf44859a44, type: 3}
   m_PrefabInstance: {fileID: 53044395}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1563928054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563928055}
+  - component: {fileID: 1563928057}
+  - component: {fileID: 1563928056}
+  m_Layer: 0
+  m_Name: PopulationChart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1563928055
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563928054}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1382152547}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 90, y: 250}
+  m_SizeDelta: {x: 600, y: 500}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &1563928056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563928054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4eb5de5e3740274b89d398c23a04b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chartStyles:
+    barChart:
+      barWidth: 10
+      barSpacing: 3
+      enableBarBackground: 0
+      barBackgroundWidth: 10
+      barBackgroundColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.2}
+      barGradientStart:
+        intensity: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+      barGradientEnd:
+        intensity: 0
+        color: {r: 0, g: 0, b: 0, a: 0}
+    lineChart:
+      pointSize: 10
+      enableLine: 1
+      lineWidth: 5
+      enableShade: 1
+      shadeOpacity: 0.25
+      pointOutline: 0
+      pointOutlineWidth: 2
+      pointOutlineColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+      swapPointOutlineColor: 0
+      splineCurve: 0
+    pieChart:
+      seriesSpacing: 0
+      dataSpacing: 0
+      seriesColorBlend: []
+    roseChart:
+      barWidth: 10
+      barSpacing: 3
+      enableBarBackground: 0
+      barBackgroundWidth: 10
+      barBackgroundColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.2}
+    radarChart:
+      pointSize: 10
+      enableLine: 1
+      lineWidth: 5
+      enableShade: 0
+      shadeOpacity: 0.7
+      pointOutline: 0
+      pointOutlineWidth: 2
+      pointOutlineColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+      swapPointOutlineColor: 0
+      circularGrid: 0
+    gauge:
+      pointerStart: 0
+      pointerEnd: 1
+      pointerWidth: 4
+      pointerColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+      enableSubTick: 1
+      subtickColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+      subtickSize: {x: 2, y: 3}
+      subtickDivision: 5
+      bands: []
+    solidGauge:
+      barWidth: 10
+      barSpacing: 3
+      enableBarBackground: 0
+      barBackgroundWidth: 10
+      barBackgroundColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.2}
+  plotOptions:
+    seriesColors:
+    - {r: 0.972549, g: 0.36862746, b: 0.29803923, a: 1}
+    - {r: 0.5647059, g: 0.92941177, b: 0.49019608, a: 1}
+    - {r: 0.5647059, g: 0.92941177, b: 0.49019608, a: 1}
+    - {r: 0.96862745, g: 0.6392157, b: 0.36078432, a: 1}
+    - {r: 0.5019608, g: 0.52156866, b: 0.9137255, a: 1}
+    - {r: 0.94509804, g: 0.36078432, b: 0.5019608, a: 1}
+    - {r: 0.89411765, g: 0.827451, b: 0.32941177, a: 1}
+    - {r: 0.16862746, g: 0.5647059, b: 0.56078434, a: 1}
+    - {r: 0.95686275, g: 0.35686275, b: 0.35686275, a: 1}
+    - {r: 0.74509805, g: 0.43137255, b: 0.9411765, a: 1}
+    - {r: 0.6666667, g: 0.9411765, b: 0.9411765, a: 1}
+    seriesIcons:
+    - {fileID: 21300000, guid: afa26bf056eac2d4a998668edd26ba17, type: 3}
+    cultureInfoName: 
+    generalFont: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+    colorMode: 0
+    mouseTracking: 2
+    columnStacking: 0
+    itemHighlightColor: {r: 0.6784314, g: 0.85882354, b: 0.93333334, a: 0.39215687}
+    backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    frontGrid: 0
+  rectOptions:
+    inverted: 0
+    enableZoom: 0
+    zoomMin: 0
+    zoomMax: 1
+    minZoomInterval: 0.1
+  circleOptions:
+    innerSize: 0
+    outerSize: 1
+    startAngle: 0
+    endAngle: 360
+    autoResize: 1
+  title:
+    enableTitle: 1
+    titleAlignment: 4
+    titleOffset: {x: 0, y: 0}
+    titleTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    enableSubTitle: 0
+    subtitleAlignment: 4
+    subtitleOffset: {x: 0, y: 0}
+    subtitleTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+  xAxis:
+    type: 0
+    enableAxisLine: 1
+    axisLineColor: {r: 1, g: 1, b: 1, a: 1}
+    axisLineWidth: 2
+    enableGridLine: 0
+    gridLineColor: {r: 1, g: 1, b: 1, a: 1}
+    gridLineWidth: 1
+    enableTick: 1
+    tickColor: {r: 1, g: 1, b: 1, a: 1}
+    tickSize: {x: 2, y: 4}
+    mirrored: 0
+    minPadding: 0
+    maxPadding: 10
+    enableTitle: 0
+    titleTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 20
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    enableLabel: 1
+    labelContent: 
+    labelNumericFormat: 
+    labelTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    labelRotationMode: 0
+    autoAxisRange: 1
+    restrictAutoRange: 1
+    startFromZero: 0
+    min: 0
+    max: 100
+    axisDivision: 5
+    interval: -1
+  yAxis:
+    type: 1
+    enableAxisLine: 1
+    axisLineColor: {r: 1, g: 1, b: 1, a: 1}
+    axisLineWidth: 2
+    enableGridLine: 1
+    gridLineColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+    gridLineWidth: 1
+    enableTick: 1
+    tickColor: {r: 1, g: 1, b: 1, a: 1}
+    tickSize: {x: 2, y: 4}
+    mirrored: 0
+    minPadding: 0
+    maxPadding: 10
+    enableTitle: 0
+    titleTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    enableLabel: 1
+    labelContent: 
+    labelNumericFormat: 
+    labelTextOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    labelRotationMode: 0
+    autoAxisRange: 1
+    restrictAutoRange: 0
+    startFromZero: 1
+    min: 0
+    max: 100
+    axisDivision: 5
+    interval: -1
+  tooltip:
+    enable: 1
+    headerContent: 
+    pointContent: 
+    numericFormat: 
+    textOption:
+      color: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    backgroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.7}
+  legend:
+    enable: 1
+    position: 7
+    layout: 0
+    alignment: 0
+    spacing: {x: 0, y: 0}
+    offset: {x: 0, y: 0}
+    sizeLimit: {x: -1, y: -1}
+    content: 
+    numericFormat: 
+    textOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    enableIcon: 1
+    normalColor: {r: 0, g: 0, b: 0, a: 0}
+    highlightedColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.7}
+    dimmedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  label:
+    enable: 0
+    content: 
+    numericFormat: 
+    textOption:
+      color: {r: 1, g: 1, b: 1, a: 1}
+      fontSize: 30
+      font: {fileID: 12800000, guid: 49ffbc50da3cde84e93a9505bf7d8660, type: 3}
+      customizedText: {fileID: 0}
+    anchoredPosition: 1
+    offset: 12
+    rotationMode: 0
+--- !u!114 &1563928057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563928054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146ed4b985137f0439f40a4c6d7f22e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chartType: 1
+  chartOptions: {fileID: 1563928056}
+  chartData: {fileID: 0}
 --- !u!4 &1576137883 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2373366262511210263, guid: 908fd2f2e6ca4e44b8c2863f8f5f0e8e, type: 3}
@@ -12707,6 +13292,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2072176409}
   - component: {fileID: 2072176410}
+  - component: {fileID: 2072176412}
+  - component: {fileID: 2072176411}
   m_Layer: 0
   m_Name: ChartController
   m_TagString: Untagged
@@ -12742,6 +13329,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myChart: {fileID: 605249841}
+--- !u!114 &2072176411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072176408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c498ead8beb7b4994893d052b0d51f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myChart: {fileID: 1563928057}
+--- !u!114 &2072176412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072176408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fca45409f1fa71d4a8606fc3e641d31e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myChart: {fileID: 318377899}
 --- !u!4 &2072503126 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2893095847137759561, guid: 8782282e42fc20b4e9533baf44859a44, type: 3}
