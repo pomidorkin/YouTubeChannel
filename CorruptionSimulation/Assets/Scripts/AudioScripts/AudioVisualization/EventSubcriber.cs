@@ -19,6 +19,6 @@ public class EventSubcriber : MonoBehaviour
 
     private void Handler()
     {
-        animator.Play("Jump");
+        animator.Play("PropJump");
     }
 }

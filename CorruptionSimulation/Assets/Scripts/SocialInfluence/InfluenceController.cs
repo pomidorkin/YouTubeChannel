@@ -36,10 +36,31 @@ public class InfluenceController : MonoBehaviour
     private float avgGreenThreshold = 0;
     private float avgRedThreshold = 0;
 
+    // Charts
+    [SerializeField] PieOpinionChart chartController;
+
     private void Start()
     {
-        //ChangeOpinionCommand();
-        InteractCommand();
+        ChangeOpinionCommand();
+        //InteractCommand();
+    }
+
+    private void UpdateChart()
+    {
+        int redSlimes = 0;
+        int greenSlimes = 0;
+        foreach (InfluenceSlime item in slimes)
+        {
+            if (item.opinion == 1)
+            {
+                greenSlimes++;
+            }
+            else if (item.opinion == -1)
+            {
+                redSlimes++;
+            }
+        }
+        chartController.AddDataToChart(redSlimes, greenSlimes);
     }
 
     public float GetMaxWeight()
@@ -96,6 +117,7 @@ public class InfluenceController : MonoBehaviour
 
         if (allSlimesReachedPosition)
         {
+            UpdateChart();
             ResetAverageThreshold();
             ResetCommand();
             ChangeOpinionCommand();
