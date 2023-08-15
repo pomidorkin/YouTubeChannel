@@ -27,6 +27,7 @@ public class InfluenceSlime : MonoBehaviour
     [SerializeField] Renderer renderer;
     [SerializeField] Material greenMat;
     [SerializeField] Material redMat;
+    [SerializeField] ParticleSystem changeOpiniorParticle;
 
     public bool opinionReviewed = false;
     public bool positionReached = false;
@@ -145,24 +146,24 @@ public class InfluenceSlime : MonoBehaviour
         for (int i = 0; i < neighbors.Count; i++)
         {
             float dist = Vector3.Distance(neighbors[i].transform.position, transform.position);
-            //sumOfWeights += (maxDistance - dist) * neighbors[i].opinion;
             float opinionWeight = (maxDistance - dist);
-            sumOfWeights += (opinionWeight * (opinionWeight / influenceController.maxDistance)) * neighbors[i].opinion;// TEST
-
-            //Debug.Log("dist: " + dist + ", (sumOfWeights / influenceController.GetMaxWeight()) * 100: " + (sumOfWeights / influenceController.GetMaxWeight()) * 100);
-            //Debug.Log("Мнение/важность мнения другого слайма: " + opinionWeight * (opinionWeight / influenceController.maxDistance));
-            //Debug.Log("По старому: " + (maxDistance - dist) * neighbors[i].opinion);
+            if (opinionWeight < 0)
+            {
+                opinionWeight = 0;
+            }
+            sumOfWeights += (opinionWeight * (opinionWeight / influenceController.maxDistance)) * neighbors[i].opinion;
         }
+
         sumOfWeights = (sumOfWeights / influenceController.GetMaxWeight()) * 100;
         MyLastSumOfWeights = sumOfWeights;
-        //Debug.Log("My threshold: " + threshold + ", sumOfWeights: " + sumOfWeights);
 
-        //if ((sumOfWeights >= threshold && opinion == -1) || (sumOfWeights <= -threshold && opinion == 1))
         if ((sumOfWeights >= threshold && opinion == -1) || (sumOfWeights <= -threshold && opinion == 1))
         {
             // Opinion changed
             if (opinion == 1)
             {
+                changeOpiniorParticle.gameObject.SetActive(true);
+                StartCoroutine(DisableParticleEffect());
                 renderer.material = redMat;
                 opinion = -1;
             }
@@ -172,6 +173,12 @@ public class InfluenceSlime : MonoBehaviour
                 opinion = 1;
             }
         }
+    }
+
+    private IEnumerator DisableParticleEffect()
+    {
+        yield return new WaitForSeconds(1);
+        changeOpiniorParticle.gameObject.SetActive(false);
     }
 
     private void TryChangeOpinion()
