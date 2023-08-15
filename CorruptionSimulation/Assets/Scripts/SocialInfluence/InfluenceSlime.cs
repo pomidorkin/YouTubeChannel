@@ -13,6 +13,13 @@ public class InfluenceSlime : MonoBehaviour
     [SerializeField] bool controlOwnThreshold = false;
     public List<InfluenceSlime> society;
 
+    [SerializeField] bool marchingSlime = false;
+    [SerializeField] bool stationarygSlime = false;
+    private bool startMarching = false;
+    [SerializeField] AnimationClip referenceAnim;
+    private float marchingLength;
+    private float marchingCounter;
+
 
     [SerializeField] public Animator animator;
     public NavMeshAgent agent;
@@ -35,6 +42,11 @@ public class InfluenceSlime : MonoBehaviour
         influenceController.ResetCommand += ResetSlime;
         influenceController.InteractCommand += Interact;
 
+        if (marchingSlime || stationarygSlime)
+        {
+            agent.enabled = false;
+        }
+
         if (!controlOwnThreshold)
         {
             if (influenceController.generalThreshold)
@@ -46,6 +58,8 @@ public class InfluenceSlime : MonoBehaviour
                 threshold = UnityEngine.Random.Range(influenceController.minThreshold, influenceController.maxThreshold + 1);
             }
         }
+
+        marchingLength = referenceAnim.length;
     }
 
     private void OnDisable()
@@ -57,33 +71,66 @@ public class InfluenceSlime : MonoBehaviour
 
     private void Update()
     {
-        if (!agent.pathPending)
+        if (!stationarygSlime && !marchingSlime)
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
+            if (!agent.pathPending)
             {
-                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                if (agent.remainingDistance <= agent.stoppingDistance)
                 {
-                    if (!positionReached)
+                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                     {
-                        animator.SetTrigger("StopJumping");
-                        positionReached = true;
-                        influenceController.CheckIfAllReachedPosition();
+                        if (!positionReached)
+                        {
+                            animator.SetTrigger("StopJumping");
+                            positionReached = true;
+                            influenceController.CheckIfAllReachedPosition();
+                        }
                     }
                 }
+            }
+        }
+
+        if (startMarching)
+        {
+            if (marchingCounter < marchingLength)
+            {
+                marchingCounter += Time.deltaTime;
+                transform.position += new Vector3(0, 0, 1) * Time.deltaTime;
+            }
+            else
+            {
+                animator.SetTrigger("StopJumping");
+                positionReached = true;
+                startMarching = false;
+                marchingCounter = 0;
+                influenceController.CheckIfAllReachedPosition();
             }
         }
     }
 
     private void Interact()
     {
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * walkRadius;
-        randomDirection += transform.position;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, walkRadius, 1);
-        Vector3 finalPosition = hit.position;
+        if (!marchingSlime && !stationarygSlime)
+        {
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * walkRadius;
+            randomDirection += transform.position;
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomDirection, out hit, walkRadius, 1);
+            Vector3 finalPosition = hit.position;
 
-        animator.SetTrigger("Jump");
-        agent.SetDestination(finalPosition);
+            animator.SetTrigger("Jump");
+            agent.SetDestination(finalPosition);
+        }
+        else if (marchingSlime)
+        {
+            animator.SetTrigger("Jump");
+            startMarching = true;
+        }
+        else if (stationarygSlime)
+        {
+            positionReached = true;
+            influenceController.CheckIfAllReachedPosition();
+        }
     }
 
     private void ResetSlime()

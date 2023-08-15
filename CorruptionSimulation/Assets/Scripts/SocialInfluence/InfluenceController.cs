@@ -47,8 +47,8 @@ public class InfluenceController : MonoBehaviour
 
     private void Start()
     {
-        ChangeOpinionCommand();
-        //InteractCommand();
+        //ChangeOpinionCommand();
+        InteractCommand();
     }
 
     private void UpdateChart()

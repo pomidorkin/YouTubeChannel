@@ -118,6 +118,9 @@ MonoBehaviour:
   maxDistance: 40
   controlOwnThreshold: 0
   society: []
+  marchingSlime: 0
+  stationarygSlime: 0
+  referenceAnim: {fileID: 7400000, guid: 2dcd6f23eeab57246bcbbd8abf3afb88, type: 2}
   animator: {fileID: 5880429524870405468}
   agent: {fileID: 8174518601021458763}
   renderer: {fileID: 4472801263165465808}
@@ -125,6 +128,7 @@ MonoBehaviour:
   redMat: {fileID: 2100000, guid: 795c8fb2600ecd047b7f9c84e615b2f6, type: 2}
   opinionReviewed: 0
   positionReached: 0
+  MyLastSumOfWeights: 0
 --- !u!95 &5880429524870405468
 Animator:
   serializedVersion: 4
