@@ -24,7 +24,7 @@ public class InfluenceController : MonoBehaviour
     [SerializeField] public bool generalThreshold = false;
     [SerializeField] public int threshold = 15;
     [SerializeField] public int minThreshold = 0;
-    [SerializeField] [Range(1, 100)] public float maxThreshold = 100;
+    [SerializeField] [Range(0, 100)] public float maxThreshold = 100;
     [SerializeField] private int numberOfIterations = 20;
     [SerializeField] public float maxDistance = 40f;
     private int iterationIndex = 0;

@@ -46,11 +46,14 @@ public class AvgThresholdChart : MonoBehaviour
 
     public void AddDataToChart(float redAvgThreshold, float greenAvgThreshold)
     {
-        iteration += 5;
-        series1.dataY.Add(redAvgThreshold);
-        series2.dataY.Add(greenAvgThreshold);
-        myChart.chartData.categoriesX.Add(iteration.ToString());
+        if (series1 != null && series2 != null)
+        {
+            iteration += 5;
+            series1.dataY.Add(redAvgThreshold);
+            series2.dataY.Add(greenAvgThreshold);
+            myChart.chartData.categoriesX.Add(iteration.ToString());
 
-        myChart.UpdateChart();
+            myChart.UpdateChart();
+        }
     }
 }

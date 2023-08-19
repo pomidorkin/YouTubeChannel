@@ -151,7 +151,8 @@ public class InfluenceSlime : MonoBehaviour
             {
                 opinionWeight = 0;
             }
-            sumOfWeights += (opinionWeight * (opinionWeight / influenceController.maxDistance)) * neighbors[i].opinion;
+            //sumOfWeights += (opinionWeight * (opinionWeight / influenceController.maxDistance)) * neighbors[i].opinion;
+            sumOfWeights += ((opinionWeight / influenceController.maxDistance) * (opinionWeight / influenceController.maxDistance)) * neighbors[i].opinion; // Интересно при значении порога в 0.3
         }
 
         sumOfWeights = (sumOfWeights / influenceController.GetMaxWeight()) * 100;

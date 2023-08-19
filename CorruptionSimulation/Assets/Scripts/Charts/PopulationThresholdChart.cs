@@ -46,11 +46,14 @@ public class PopulationThresholdChart : MonoBehaviour
 
     public void AddDataToChart(int redPopulation, int greenPopulation)
     {
-        iteration += 5;
-        series1.dataY.Add(redPopulation);
-        series2.dataY.Add(greenPopulation);
-        myChart.chartData.categoriesX.Add(iteration.ToString());
+        if (series1 != null && series2 != null)
+        {
+            iteration += 5;
+            series1.dataY.Add(redPopulation);
+            series2.dataY.Add(greenPopulation);
+            myChart.chartData.categoriesX.Add(iteration.ToString());
 
-        myChart.UpdateChart();
+            myChart.UpdateChart();
+        }
     }
 }
